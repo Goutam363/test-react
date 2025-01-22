@@ -1,0 +1,16 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - run: docker build . -t goutam363/test-react
+    - run: echo "${{secrets.DOCKER_HUB_ACCESS_TOKEN}}" | docker login -u ${{secrets.DOCKER_HUB_USERNAME}} --password-stdin
+    - run: docker push goutam363/test-react:latest
